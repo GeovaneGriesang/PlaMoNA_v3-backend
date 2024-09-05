@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Documentação API PlaMoNA</title>
+</head>
+<style>
+    body {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin: 2em 15em;
+        background-color: #101010;
+        color: #f0f0f0;
+    }
+
+    #main{
+        background-color: #333;
+        padding: 2em;
+        border-radius: 1em;
+    }
+
+    h1 {
+        color: #3633f9;
+    }
+
+    h2 {
+        color: #333;
+        margin-top: 20px;
+    }
+
+    h3 {
+        color: green;
+        margin-top: 2em;
+    }
+
+    h4 {
+        color: #333;
+        margin-top: 2em;
+    }
+
+    pre {
+        background-color: #101010;
+        padding: 2em;
+        border-radius: 1em;
+        overflow-x: auto;
+    }
+
+    ul {
+        list-style-type: disc;
+        margin-left: 20px;
+    }
+
+    a {
+        color: #3633f9;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<body>
+    <div id="main">
+        <h1>PlaMoNA - API</h1>
+        <img src="https://img.shields.io/badge/CONSTRU%C3%8DDO%20COM%20NODEJS-black?style=for-the-badge&logo=javascript"
+            alt="Static Badge">
+        <p><a href="https://plamona.onrender.com">URL da api de teste</a></p>
+
+        <h2>Rotas</h2>
+
+        <h3><img src="https://img.shields.io/badge/POST-green?style=for-the-badge" alt="Static Badge"> /medicoes</h3>
+        <p>A rota "/medicoes" retorna os dados de períodos fixos, sendo eles:</p>
+        <ul>
+            <li>Semana Atual</li>
+            <li>Semana Anterior</li>
+            <li>Dia Atual</li>
+        </ul>
+
+        <h4>Query:</h4>
+        <p>As querys utilizadas para fazer a requisição para api pelo meio do método POST são:</p>
+        <pre>
+{"periodo" : "semana"} // Semana atual
+{"periodo" : "semanaAnterior"} // Semana anterior
+{"periodo" : "dia"} // Dia atual
+    </pre>
+
+        <h4>Resultado:</h4>
+        <p>Os dados são retornados em um JSON. Sendo "id" o identificador do período que vai aparecer nos gráficos,
+            "color"
+            a cor que iria aparecer nos gráficos, e "data" são os pontos X e Y onde os níveis vão aparecer nos gráficos.
+        </p>
+        <p><em>(Os níveis irão aparecer nos gráficos com duas casas decimais por que os gráficos contam com um
+                tratamento
+                automático)</em></p>
+        <pre>
+[
+ {
+    "id":"Semana Atual",
+    "color":"#3633f9",
+    "data":[
+        {
+        "x":"dom.",
+        "y":4.462916672229767
+        },
+        {
+        "x":"seg.",
+        "y":2.3800000150998435
+        },
+        {
+        "x":"ter.",
+        "y":2.139583314458529
+        },
+        {
+        "x":"qua.",
+        "y":1.6754166632890701
+        },
+        {
+        "x":"qui.",
+        "y":3.9137500325838723
+        },
+        {
+        "x":"sex.",
+        "y":5.208750009536743
+        },
+        {
+        "x":"sáb.",
+        "y":5.5
+        }
+    ]
+ }
+]
+    </pre>
+
+        <h3><img src="https://img.shields.io/badge/POST-green?style=for-the-badge" alt="Static Badge"> /comparacao</h3>
+        <p>A rota comparação retorna dados de dois dias que são inseridos pelo usuário. Pela query também é possível
+            indicar
+            o período que deseja ser inserido</p>
+
+        <h4>Query</h4>
+        <p>A query é feita da seguinte maneira:</p>
+        <pre>
+{
+    "periodo" : "semana",
+    "comp_1" : "2023-10-11T03:00:00.000Z",
+    "comp_2" : "2023-10-10T03:00:00.000Z"
+}
+    </pre>
+        <p>"periodo" pode ser:</p>
+        <ul>
+            <li>"semana" -> Média de cada dia da semana</li>
+            <li>"mes" -> Média de cada dia do mês</li>
+            <li>"ano" -> Média de cada mês</li>
+            <li>"dia" -> Níveis por hora</li>
+            <li>"diaEsp" -> Retorna o mesmo que o dia, porém retorna só um dia (Utilizado no gráfico com flechas)</li>
+        </ul>
+        <p>"comp_1" e "comp_2" recebem datas dessa forma: "2023-10-11T03:00:00.000Z", pois o input de date utilizado as
+            envia dessa forma.</p>
+
+        <h4>Resultado</h4>
+        <p>Os dados são retornados em um JSON. Sendo "id" o identificador do período que vai aparecer nos gráficos,
+            "color"
+            a cor que iria aparecer nos gráficos, e "data" são os pontos X e Y onde os níveis vão aparecer nos gráficos.
+        </p>
+        <p><em>(Os níveis irão aparecer nos gráficos com duas casas decimais por que os gráficos contam com um
+                tratamento
+                automático)</em></p>
+        <pre>
+[
+ {
+    "id":"15/09/2023",
+    "color":"#3633f9",
+    "data":[
+        {
+        "x":"dom.",
+        "y":4.462916672229767
+        },
+        {
+        "x":"seg.",
+        "y":2.3800000150998435
+        },
+        {
+        "x":"ter.",
+        "y":2.139583314458529
+        },
+        {
+        "x":"qua.",
+        "y":1.6754166632890701
+        },
+        {
+        "x":"qui.",
+        "y":3.9137500325838723
+        },
+        {
+        "x":"sex.",
+        "y":5.208750009536743
+        },
+        {
+        "x":"sáb.",
+        "y":5.5
+        }
+    ]
+ },
+ {
+    "id":"23/09/2023",
+    "color":"#3633f9",
+    "data":[
+        {
+        "x":"dom.",
+        "y":4.462916672229767
+        },
+        {
+        "x":"seg.",
+        "y":2.3800000150998435
+        },
+        {
+        "x":"ter.",
+        "y":2.139583314458529
+        },
+        {
+        "x":"qua.",
+        "y":1.6754166632890701
+        },
+        {
+        "x":"qui.",
+        "y":3.9137500325838723
+        },
+        {
+        "x":"sex.",
+        "y":5.208750009536743
+        },
+        {
+        "x":"sáb.",
+        "y":5.5
+        }
+    ]
+ }
+]
+    </pre>
+    </div>
+</body>
+
+</html>
